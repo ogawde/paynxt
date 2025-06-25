@@ -1,0 +1,75 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+enum UserType {
+  CONSUMER  
+  MERCHANT  
+}
+
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum TransactionType {
+  TRANSFER
+  PAY_REQUEST
+}
+
+
+enum PayRequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id            String   @id @default(cuid())
+  email         String   @unique  
+  passwordHash  String   @map("password_hash")  
+  userType      UserType @map("user_type")  
+  balance       Int      @default(1000000)  
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+
+}
+
+
+model Transaction {
+  id           String            @id @default(cuid())
+  fromUserId   String            @map("from_user_id")  
+  toUserId     String            @map("to_user_id")   
+  amount       Int              
+  status       TransactionStatus @default(PENDING)     
+  type         TransactionType   
+  createdAt    DateTime          @default(now()) @map("created_at")
+  completedAt  DateTime?         @map("completed_at")  
+  failureReason String?          @map("failure_reason") 
+
+ 
+
+}
+
+
+model PayRequest {
+  id         String           @id @default(cuid())
+  merchantId String           @map("merchant_id") 
+  consumerId String           @map("consumer_id")  
+  amount     Int              
+  status     PayRequestStatus @default(PENDING)
+  message    String?        
+  createdAt  DateTime         @default(now()) @map("created_at")
+  updatedAt  DateTime         @updatedAt @map("updated_at")
+
+}
+
