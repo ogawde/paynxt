@@ -41,7 +41,15 @@ model User {
   createdAt     DateTime @default(now()) @map("created_at")
   updatedAt     DateTime @updatedAt @map("updated_at")
 
+  transactionsSent     Transaction[] @relation("TransactionSender")
+  transactionsReceived Transaction[] @relation("TransactionRecipient")
 
+  payRequestsSent     PayRequest[] @relation("PayRequestMerchant")
+
+  payRequestsReceived PayRequest[] @relation("PayRequestConsumer")
+
+  @@index([email])
+  @@map("users")
 }
 
 
@@ -57,7 +65,13 @@ model Transaction {
   failureReason String?          @map("failure_reason") 
 
  
+  fromUser User @relation("TransactionSender", fields: [fromUserId], references: [id])
+  toUser   User @relation("TransactionRecipient", fields: [toUserId], references: [id])
 
+  @@index([status, createdAt])  
+  @@index([fromUserId])
+  @@index([toUserId])
+  @@map("transactions")
 }
 
 
@@ -71,5 +85,12 @@ model PayRequest {
   createdAt  DateTime         @default(now()) @map("created_at")
   updatedAt  DateTime         @updatedAt @map("updated_at")
 
+
+  merchant User @relation("PayRequestMerchant", fields: [merchantId], references: [id])
+  consumer User @relation("PayRequestConsumer", fields: [consumerId], references: [id])
+
+  @@index([consumerId, status])  
+  @@index([merchantId, status])  
+  @@map("pay_requests")
 }
 
