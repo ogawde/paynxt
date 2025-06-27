@@ -1,25 +1,52 @@
 import express from "express";
 import cors from "cors";
+import rateLimit from "express-rate-limit";
+import { config } from "./config";
+import { errorHandler } from "./middleware/error-handler";
+
+import authRoutes from "./routes/auth.routes";
+import userRoutes from "./routes/user.routes";
+import transactionRoutes from "./routes/transaction.routes";
+import payRequestRoutes from "./routes/pay-request.routes";
 
 const app = express();
 
-
 app.use(
-    cors({
-      credentials: true,
-    })
-  );
+  cors({
+    origin: config.corsOrigins,
+    credentials: true,
+  })
+);
 
-  app.use(express.json());
+app.use(express.json());
 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests from this IP, please try again later.",
+});
+app.use(limiter);
 
-  app.get("/health", (req, res) => {
-    res.json({
-      success: true,
-      message: "PayNXT API is running",
-      timestamp: new Date().toISOString(),
-    });
+app.get("/health", (req, res) => {
+  res.json({
+    success: true,
+    message: "PayNXT API is running",
+    timestamp: new Date().toISOString(),
   });
+});
 
-  app.listen(3000);
-  
+app.use("/api/auth", authRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/transactions", transactionRoutes);
+app.use("/api/pay-requests", payRequestRoutes);
+
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    error: "Route not found",
+  });
+});
+
+app.use(errorHandler);
+
+app.listen(config.port, () => {});
