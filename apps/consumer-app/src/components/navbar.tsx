@@ -1,10 +1,3 @@
-/**
- * Navigation Bar Component
- * 
- * Top navigation for authenticated pages
- * Shows current page and logout button
- */
-
 "use client";
 
 import Link from "next/link";
@@ -18,10 +11,6 @@ export function Navbar() {
   const pathname = usePathname();
   const user = getCurrentUser();
 
-  /**
-   * Handle logout
-   * Clears authentication data and redirects to login
-   */
   const handleLogout = () => {
     logout();
     router.push("/login");

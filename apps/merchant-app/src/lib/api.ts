@@ -1,9 +1,3 @@
-/**
- * API Client for Merchant App
- * 
- * Same structure as consumer app but includes merchant-specific endpoints
- */
-
 import {
   ApiResponse,
   LoginInput,

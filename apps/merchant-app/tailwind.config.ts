@@ -1,11 +1,3 @@
-/**
- * Tailwind Config for Merchant App
- * 
- * Theme: Soft, professional colors
- * #E3FDFD (very light cyan), #CBF1F5 (light cyan), #A6E3E9 (cyan), #71C9CE (darker cyan)
- * Creates a calming, trustworthy business aesthetic
- */
-
 import type { Config } from "tailwindcss";
 
 const config: Config = {

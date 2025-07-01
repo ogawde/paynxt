@@ -1,13 +1,3 @@
-/**
- * Root Layout for Merchant App
- * 
- * Sets up:
- * - HTML structure
- * - Global styles
- * - React Query provider
- * - Font configuration
- */
-
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";

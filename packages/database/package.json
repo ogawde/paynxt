@@ -1,28 +1,27 @@
 {
   "name": "@paynxt/database",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
   "main": "./src/index.ts",
   "types": "./src/index.ts",
-  "exports": {
-    ".": "./src/index.ts"
-  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx prisma/seed.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^3.0.2"
+    "bcryptjs": "^2.4.3"
   },
   "devDependencies": {
+    "@paynxt/config-typescript": "workspace:*",
     "@prisma/client": "^6.17.1",
-    "@repo/typescript-config": "workspace:*",
-    "@types/bcryptjs": "^3.0.0",
-    "@types/node": "^22.15.3",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.0",
+    "i": "^0.3.7",
+    "pnpm": "^10.18.2",
     "prisma": "^6.17.1",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3"
+    "tsx": "^4.7.0",
+    "typescript": "^5.6.0"
   }
 }

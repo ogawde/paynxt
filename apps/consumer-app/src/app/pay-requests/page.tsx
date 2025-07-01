@@ -1,18 +1,3 @@
-/**
- * Pay Requests Page (Consumer)
- * 
- * View and manage pay requests from merchants
- * Consumers can approve or reject pay requests
- * 
- * Flow:
- * 1. Fetch pay requests from API
- * 2. Display pending requests prominently
- * 3. Consumer clicks Approve or Reject
- * 4. API updates pay request status
- * 5. If approved, a PENDING transaction is created
- * 6. Sweeper processes the transaction
- */
-
 "use client";
 
 import { useEffect, useState } from "react";
@@ -39,16 +24,12 @@ export default function PayRequestsPage() {
   const [actionError, setActionError] = useState("");
   const [actionSuccess, setActionSuccess] = useState("");
 
-  // Check authentication on mount
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push("/login");
     }
   }, [router]);
 
-  /**
-   * Fetch pay requests received by this consumer
-   */
   const { data: payRequestsData, isLoading } = useQuery({
     queryKey: ["payRequests", "received"],
     queryFn: async () => {
@@ -58,9 +39,6 @@ export default function PayRequestsPage() {
     enabled: isAuthenticated(),
   });
 
-  /**
-   * Approve pay request mutation
-   */
   const approveMutation = useMutation({
     mutationFn: async (id: string) => {
       return await payRequestApi.approve(id);
@@ -80,9 +58,6 @@ export default function PayRequestsPage() {
     },
   });
 
-  /**
-   * Reject pay request mutation
-   */
   const rejectMutation = useMutation({
     mutationFn: async (id: string) => {
       return await payRequestApi.reject(id);
@@ -150,7 +125,6 @@ export default function PayRequestsPage() {
           </div>
         )}
 
-        {/* Pending Requests */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>Pending Requests</CardTitle>
@@ -221,7 +195,6 @@ export default function PayRequestsPage() {
           </CardContent>
         </Card>
 
-        {/* Completed Requests */}
         <Card>
           <CardHeader>
             <CardTitle>Past Requests</CardTitle>

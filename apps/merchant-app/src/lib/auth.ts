@@ -1,8 +1,3 @@
-/**
- * Authentication Utilities
- * Same as consumer app
- */
-
 import { User } from "@paynxt/types";
 
 export function isAuthenticated(): boolean {

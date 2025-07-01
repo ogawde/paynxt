@@ -1,34 +1,25 @@
-/**
- * Global Styles for Merchant App
- * 
- * Merchant Theme: Soft cyan/turquoise palette
- * Colors: #E3FDFD, #CBF1F5, #A6E3E9, #71C9CE
- * Creates a professional, calming business environment
- */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Merchant theme - soft cyan tones */
-    --background: 184 100% 97%; /* #E3FDFD - very light cyan */
-    --foreground: 180 15% 20%; /* Dark gray-cyan for text */
+    --background: 184 100% 97%;
+    --foreground: 180 15% 20%;
 
-    --card: 0 0% 100%; /* White cards */
+    --card: 0 0% 100%;
     --card-foreground: 180 15% 20%;
 
-    --primary: 182 35% 62%; /* #71C9CE - darker cyan */
+    --primary: 182 35% 62%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 184 54% 83%; /* #CBF1F5 - light cyan */
+    --secondary: 184 54% 83%;
     --secondary-foreground: 180 15% 20%;
 
-    --muted: 184 54% 90%; /* Very light cyan */
+    --muted: 184 54% 90%;
     --muted-foreground: 180 10% 45%;
 
-    --accent: 183 45% 76%; /* #A6E3E9 - medium cyan */
+    --accent: 183 45% 76%;
     --accent-foreground: 180 15% 20%;
 
     --destructive: 0 84% 60%;

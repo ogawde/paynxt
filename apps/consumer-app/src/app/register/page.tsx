@@ -1,17 +1,3 @@
-/**
- * Register Page (Consumer)
- * 
- * Allows new consumers to create an account
- * 
- * Flow:
- * 1. User enters email and password
- * 2. Submit to backend API with userType: CONSUMER
- * 3. Receive JWT token and user data
- * 4. User gets 10,000 ₱ initial balance automatically
- * 5. Store in localStorage
- * 6. Redirect to dashboard
- */
-
 "use client";
 
 import { useState } from "react";
@@ -30,44 +16,28 @@ export default function RegisterPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  /**
-   * Handle registration form submission
-   * 
-   * Flow:
-   * 1. Validate passwords match
-   * 2. Validate input using Zod schema
-   * 3. Call register API with CONSUMER type
-   * 4. Store token and user in localStorage
-   * 5. Navigate to dashboard
-   * 6. Show error if registration fails
-   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      // Validate passwords match
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match");
       }
 
-      // Validate input
       const validatedData = registerSchema.parse({
         email,
         password,
-        userType: UserType.CONSUMER, // Fixed as CONSUMER for this app
+        userType: UserType.CONSUMER,
       });
 
-      // Call register API
       const response = await authApi.register(validatedData);
 
       if (response.success && response.data) {
-        // Store token and user data
         setToken(response.data.token);
         setCurrentUser(response.data.user);
 
-        // Redirect to dashboard
         router.push("/dashboard");
       } else {
         setError(response.error || "Registration failed");

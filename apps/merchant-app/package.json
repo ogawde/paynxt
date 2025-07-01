@@ -19,8 +19,8 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@paynxt/config-eslint": "workspace:*",
-    "@paynxt/config-typescript": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.10.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

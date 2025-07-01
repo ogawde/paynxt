@@ -1,9 +1,3 @@
-/**
- * Landing Page
- * 
- * Entry point for consumer app
- * Redirects to login page
- */
 
 "use client";
 
@@ -15,7 +9,6 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Redirect based on authentication status
     if (isAuthenticated()) {
       router.push("/dashboard");
     } else {

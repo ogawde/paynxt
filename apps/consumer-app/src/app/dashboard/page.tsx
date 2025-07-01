@@ -1,14 +1,3 @@
-/**
- * Dashboard Page (Consumer)
- * 
- * Main dashboard showing:
- * - Current balance with refresh button
- * - Quick transfer form
- * - Recent transactions
- * 
- * Inspired by Kraken's clean, data-focused layout
- */
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -37,23 +26,17 @@ export default function DashboardPage() {
   const queryClient = useQueryClient();
   const currentUser = getCurrentUser();
 
-  // Transfer form state
   const [recipientEmail, setRecipientEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [transferError, setTransferError] = useState("");
   const [transferSuccess, setTransferSuccess] = useState("");
 
-  // Check authentication on mount
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push("/login");
     }
   }, [router]);
 
-  /**
-   * Fetch user balance
-   * Uses React Query for caching and automatic refetching
-   */
   const { data: balanceData, isLoading: isLoadingBalance, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
     queryFn: async () => {
@@ -63,10 +46,6 @@ export default function DashboardPage() {
     enabled: isAuthenticated(),
   });
 
-  /**
-   * Fetch recent transactions
-   * Shows last 10 transactions
-   */
   const { data: transactionsData, isLoading: isLoadingTransactions } = useQuery({
     queryKey: ["transactions", "recent"],
     queryFn: async () => {
@@ -76,13 +55,8 @@ export default function DashboardPage() {
     enabled: isAuthenticated(),
   });
 
-  /**
-   * Transfer mutation
-   * Creates a new transfer and refreshes data
-   */
   const transferMutation = useMutation({
     mutationFn: async () => {
-      // Convert pesos to cents for API
       const amountInCents = pesosToCents(parseFloat(amount));
       
       const response = await transactionApi.transfer({
@@ -92,17 +66,14 @@ export default function DashboardPage() {
       return response;
     },
     onSuccess: () => {
-      // Clear form
       setRecipientEmail("");
       setAmount("");
       setTransferError("");
       setTransferSuccess("Transfer initiated! Processing in background.");
 
-      // Refresh data
       queryClient.invalidateQueries({ queryKey: ["balance"] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
 
-      // Clear success message after 3 seconds
       setTimeout(() => setTransferSuccess(""), 3000);
     },
     onError: (error: Error) => {
@@ -111,15 +82,11 @@ export default function DashboardPage() {
     },
   });
 
-  /**
-   * Handle transfer form submission
-   */
   const handleTransfer = (e: React.FormEvent) => {
     e.preventDefault();
     setTransferError("");
     setTransferSuccess("");
 
-    // Validate amount
     const amountNum = parseFloat(amount);
     if (isNaN(amountNum) || amountNum <= 0) {
       setTransferError("Please enter a valid amount");
@@ -130,7 +97,7 @@ export default function DashboardPage() {
   };
 
   if (!isAuthenticated()) {
-    return null; // Will redirect via useEffect
+    return null;
   }
 
   return (
@@ -146,7 +113,6 @@ export default function DashboardPage() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-8">
-          {/* Balance Card */}
           <div className="lg:col-span-1">
             <BalanceCard
               balance={balanceData?.balance || 0}
@@ -155,7 +121,6 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Quick Transfer Form */}
           <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -219,7 +184,6 @@ export default function DashboardPage() {
           </Card>
         </div>
 
-        {/* Recent Transactions */}
         <Card>
           <CardHeader>
             <CardTitle>Recent Transactions</CardTitle>

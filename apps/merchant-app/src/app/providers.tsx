@@ -1,10 +1,3 @@
-/**
- * Providers Component
- * 
- * Wraps the app with necessary providers:
- * - React Query for data fetching and caching
- */
-
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";

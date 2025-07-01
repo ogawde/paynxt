@@ -1,7 +1,3 @@
-/**
- * Login Page (Merchant)
- */
-
 "use client";
 
 import { useState } from "react";

@@ -1,12 +1,3 @@
-/**
- * Dashboard Page (Merchant)
- * 
- * Main dashboard showing:
- * - Current balance with refresh button
- * - Quick pay request form (merchant-specific feature)
- * - Recent transactions received
- */
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -35,7 +26,6 @@ export default function DashboardPage() {
   const queryClient = useQueryClient();
   const currentUser = getCurrentUser();
 
-  // Pay request form state
   const [consumerEmail, setConsumerEmail] = useState("");
   const [amount, setAmount] = useState("");
   const [message, setMessage] = useState("");
@@ -66,10 +56,6 @@ export default function DashboardPage() {
     enabled: isAuthenticated(),
   });
 
-  /**
-   * Create pay request mutation
-   * Sends payment request to a consumer
-   */
   const createPayRequestMutation = useMutation({
     mutationFn: async () => {
       const amountInCents = pesosToCents(parseFloat(amount));
@@ -137,7 +123,6 @@ export default function DashboardPage() {
             />
           </div>
 
-          {/* Quick Pay Request Form */}
           <Card className="lg:col-span-2">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">

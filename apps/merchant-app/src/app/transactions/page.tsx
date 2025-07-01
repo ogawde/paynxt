@@ -1,9 +1,3 @@
-/**
- * Transactions Page (Merchant)
- * 
- * Full transaction history
- */
-
 "use client";
 
 import { useEffect } from "react";

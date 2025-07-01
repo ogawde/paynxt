@@ -1,33 +1,25 @@
-/**
- * Global Styles for Consumer App
- * 
- * Consumer Theme: Light, clean aesthetic with teal accent (#00ADB5)
- * Inspired by modern fintech apps with trustworthy, professional feel
- */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* Consumer theme - lighter tones */
-    --background: 0 0% 98%; /* #FAFAFA - very light gray */
-    --foreground: 210 11% 15%; /* #222831 - dark gray for text */
+    --background: 0 0% 98%;
+    --foreground: 210 11% 15%;
 
-    --card: 0 0% 100%; /* White cards */
+    --card: 0 0% 100%;
     --card-foreground: 210 11% 15%;
 
-    --primary: 187 100% 34%; /* #00ADB5 - teal accent */
+    --primary: 187 100% 34%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 11% 23%; /* #393E46 - darker gray */
+    --secondary: 210 11% 23%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 0 0% 93%; /* #EEEEEE - light gray */
+    --muted: 0 0% 93%;
     --muted-foreground: 210 11% 45%;
 
-    --accent: 187 100% 34%; /* Teal accent */
+    --accent: 187 100% 34%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;

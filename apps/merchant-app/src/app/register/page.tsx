@@ -1,7 +1,3 @@
-/**
- * Register Page (Merchant)
- */
-
 "use client";
 
 import { useState } from "react";
@@ -33,7 +29,7 @@ export default function RegisterPage() {
       const validatedData = registerSchema.parse({
         email,
         password,
-        userType: UserType.MERCHANT, // Fixed as MERCHANT for this app
+        userType: UserType.MERCHANT,
       });
 
       const response = await authApi.register(validatedData);

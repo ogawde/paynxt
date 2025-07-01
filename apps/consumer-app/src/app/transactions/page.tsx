@@ -1,10 +1,3 @@
-/**
- * Transactions Page (Consumer)
- * 
- * Full transaction history with pagination
- * Shows all sent and received transactions
- */
-
 "use client";
 
 import { useEffect } from "react";
@@ -19,17 +12,12 @@ export default function TransactionsPage() {
   const router = useRouter();
   const currentUser = getCurrentUser();
 
-  // Check authentication on mount
   useEffect(() => {
     if (!isAuthenticated()) {
       router.push("/login");
     }
   }, [router]);
 
-  /**
-   * Fetch all transactions
-   * Uses React Query for caching and automatic refetching
-   */
   const { data: transactionsData, isLoading } = useQuery({
     queryKey: ["transactions", "all"],
     queryFn: async () => {
@@ -40,7 +28,7 @@ export default function TransactionsPage() {
   });
 
   if (!isAuthenticated()) {
-    return null; // Will redirect via useEffect
+    return null;
   }
 
   return (

@@ -1,10 +1,3 @@
-/**
- * Tailwind Config for Consumer App
- * 
- * Theme: Lighter tones inspired by #00ADB5 (teal) and #EEEEEE (light gray)
- * Color palette creates a clean, modern, trustworthy feel
- */
-
 import type { Config } from "tailwindcss";
 
 const config: Config = {

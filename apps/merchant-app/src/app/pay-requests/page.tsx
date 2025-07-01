@@ -1,10 +1,3 @@
-/**
- * Pay Requests Page (Merchant)
- * 
- * View sent pay requests and their status
- * Merchants can track which requests are pending, approved, or rejected
- */
-
 "use client";
 
 import { useEffect } from "react";
@@ -33,9 +26,6 @@ export default function PayRequestsPage() {
     }
   }, [router]);
 
-  /**
-   * Fetch pay requests sent by this merchant
-   */
   const { data: payRequestsData, isLoading } = useQuery({
     queryKey: ["payRequests", "sent"],
     queryFn: async () => {
@@ -83,7 +73,6 @@ export default function PayRequestsPage() {
           </p>
         </div>
 
-        {/* Pending Requests */}
         <Card className="mb-6">
           <CardHeader>
             <CardTitle>Pending Requests</CardTitle>
@@ -142,7 +131,6 @@ export default function PayRequestsPage() {
           </CardContent>
         </Card>
 
-        {/* Completed Requests */}
         <Card>
           <CardHeader>
             <CardTitle>Past Requests</CardTitle>

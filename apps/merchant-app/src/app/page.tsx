@@ -1,9 +1,3 @@
-/**
- * Landing Page (Merchant)
- * 
- * Entry point - redirects to login or dashboard
- */
-
 "use client";
 
 import { useEffect } from "react";

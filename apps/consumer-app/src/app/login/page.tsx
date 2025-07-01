@@ -1,16 +1,3 @@
-/**
- * Login Page (Consumer)
- * 
- * Allows consumers to log in with email/password
- * 
- * Flow:
- * 1. User enters credentials
- * 2. Submit to backend API
- * 3. Receive JWT token and user data
- * 4. Store in localStorage
- * 5. Redirect to dashboard
- */
-
 "use client";
 
 import { useState } from "react";
@@ -28,34 +15,20 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  /**
-   * Handle login form submission
-   * 
-   * Flow:
-   * 1. Validate input using Zod schema
-   * 2. Call login API
-   * 3. Store token and user in localStorage
-   * 4. Navigate to dashboard
-   * 5. Show error if login fails
-   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      // Validate input
       const validatedData = loginSchema.parse({ email, password });
 
-      // Call login API
       const response = await authApi.login(validatedData);
 
       if (response.success && response.data) {
-        // Store token and user data
         setToken(response.data.token);
         setCurrentUser(response.data.user);
 
-        // Redirect to dashboard
         router.push("/dashboard");
       } else {
         setError(response.error || "Login failed");
