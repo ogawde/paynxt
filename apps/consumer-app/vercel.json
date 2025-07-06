@@ -1,9 +1,0 @@
-{
-    "buildCommand": "cd ../.. && pnpm build --filter=@paynxt/consumer-app",
-    "outputDirectory": ".next",
-    "installCommand": "pnpm install",
-    "framework": "nextjs",
-    "env": {
-        "NEXT_PUBLIC_API_URL": ""
-    }
-}
