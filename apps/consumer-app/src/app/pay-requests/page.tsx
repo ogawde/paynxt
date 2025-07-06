@@ -23,12 +23,13 @@ export default function PayRequestsPage() {
   const queryClient = useQueryClient();
   const [actionError, setActionError] = useState("");
   const [actionSuccess, setActionSuccess] = useState("");
+  const isUserAuthenticated = isAuthenticated();
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isUserAuthenticated) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router, isUserAuthenticated]);
 
   const { data: payRequestsData, isLoading } = useQuery({
     queryKey: ["payRequests", "received"],
@@ -36,13 +37,11 @@ export default function PayRequestsPage() {
       const response = await payRequestApi.getReceived();
       return response.data;
     },
-    enabled: isAuthenticated(),
+    enabled: isUserAuthenticated,
   });
 
   const approveMutation = useMutation({
-    mutationFn: async (id: string) => {
-      return await payRequestApi.approve(id);
-    },
+    mutationFn: (id: string) => payRequestApi.approve(id),
     onSuccess: () => {
       setActionSuccess("Pay request approved! Payment processing in background.");
       setActionError("");
@@ -59,9 +58,7 @@ export default function PayRequestsPage() {
   });
 
   const rejectMutation = useMutation({
-    mutationFn: async (id: string) => {
-      return await payRequestApi.reject(id);
-    },
+    mutationFn: (id: string) => payRequestApi.reject(id),
     onSuccess: () => {
       setActionSuccess("Pay request rejected.");
       setActionError("");
@@ -75,7 +72,7 @@ export default function PayRequestsPage() {
     },
   });
 
-  if (!isAuthenticated()) {
+  if (!isUserAuthenticated) {
     return null;
   }
 

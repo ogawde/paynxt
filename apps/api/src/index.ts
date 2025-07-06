@@ -49,4 +49,8 @@ app.use((req, res) => {
 
 app.use(errorHandler);
 
-app.listen(config.port, () => {});
+app.listen(config.port, () => {
+  console.log(`PayNXT API listening on port ${config.port}`);
+  console.log(`Environment: ${config.nodeEnv}`);
+  console.log(`CORS origins: ${config.corsOrigins.join(", ")}`);
+});

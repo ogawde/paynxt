@@ -11,6 +11,16 @@ function requireEnv(key: string): string {
   return value;
 }
 
+function parseCorsOrigins(value: string | undefined): string[] {
+  if (!value) {
+    return ["http://localhost:3000", "http://localhost:3002"];
+  }
+  return value
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+}
+
 export const config = {
   port: parseInt(process.env.PORT || "3001", 10),
   nodeEnv: process.env.NODE_ENV || "development",
@@ -18,9 +28,7 @@ export const config = {
   jwtSecret: requireEnv("JWT_SECRET"),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
   
-  corsOrigins: process.env.CORS_ORIGINS
-    ? process.env.CORS_ORIGINS.split(",")
-    : ["http://localhost:3000", "http://localhost:3002"],
+  corsOrigins: parseCorsOrigins(process.env.CORS_ORIGINS),
   
   databaseUrl: requireEnv("DATABASE_URL"),
 } as const;

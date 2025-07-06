@@ -21,8 +21,6 @@ export function errorHandler(
   res: Response,
   next: NextFunction
 ): void {
-  console.error("Error:", error);
-
   if (error instanceof ZodError) {
     res.status(400).json({
       success: false,

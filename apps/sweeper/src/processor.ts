@@ -42,7 +42,7 @@ export async function processTransaction(
         const recipientBalance = Number(recipientResult[0].balance);
 
         if (senderBalance < transaction.amount) {
-          await tx.transaction.update({
+        await tx.transaction.update({
             where: { id: transactionId },
             data: {
               status: TransactionStatus.FAILED,
@@ -70,8 +70,6 @@ export async function processTransaction(
             completedAt: new Date(),
           },
         });
-
-        console.log(`✅ Transaction ${transactionId} processed successfully`);
       },
       {
         maxWait: 5000,
@@ -82,8 +80,6 @@ export async function processTransaction(
     return { success: true };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
-    console.error(`❌ Failed to process transaction ${transactionId}:`, errorMessage);
-    
     return { success: false, error: errorMessage };
   }
 }

@@ -15,13 +15,12 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const performLogin = async (emailValue: string, passwordValue: string) => {
     setError("");
     setIsLoading(true);
 
     try {
-      const validatedData = loginSchema.parse({ email, password });
+      const validatedData = loginSchema.parse({ email: emailValue, password: passwordValue });
 
       const response = await authApi.login(validatedData);
 
@@ -42,6 +41,19 @@ export default function LoginPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await performLogin(email, password);
+  };
+
+  const handleQuickLogin = async () => {
+    const testEmail = "testuser@test.com";
+    const testPassword = "testuser@test.com";
+    setEmail(testEmail);
+    setPassword(testPassword);
+    await performLogin(testEmail, testPassword);
   };
 
   return (
@@ -87,6 +99,17 @@ export default function LoginPage() {
                 required
                 disabled={isLoading}
               />
+            </div>
+
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={handleQuickLogin}
+                disabled={isLoading}
+                className="text-sm text-muted-foreground hover:text-primary hover:underline disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Use suggested credentials
+              </button>
             </div>
 
             <Button type="submit" className="w-full" disabled={isLoading}>

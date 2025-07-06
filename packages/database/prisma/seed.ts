@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log(" Starting database seed...");
   const passwordHash = await bcrypt.hash("password123", 10);
 
   const consumer1 = await prisma.user.upsert({
@@ -55,7 +54,6 @@ async function main() {
 
 main()
   .catch((e) => {
-    console.error("❌ Seed failed:", e);
     process.exit(1);
   })
   .finally(async () => {

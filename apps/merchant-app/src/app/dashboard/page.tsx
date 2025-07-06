@@ -25,6 +25,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const currentUser = getCurrentUser();
+  const isUserAuthenticated = isAuthenticated();
 
   const [consumerEmail, setConsumerEmail] = useState("");
   const [amount, setAmount] = useState("");
@@ -33,10 +34,10 @@ export default function DashboardPage() {
   const [requestSuccess, setRequestSuccess] = useState("");
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isUserAuthenticated) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router, isUserAuthenticated]);
 
   const { data: balanceData, isLoading: isLoadingBalance, refetch: refetchBalance } = useQuery({
     queryKey: ["balance"],
@@ -44,7 +45,7 @@ export default function DashboardPage() {
       const response = await userApi.getBalance();
       return response.data;
     },
-    enabled: isAuthenticated(),
+    enabled: isUserAuthenticated,
   });
 
   const { data: transactionsData, isLoading: isLoadingTransactions } = useQuery({
@@ -53,7 +54,7 @@ export default function DashboardPage() {
       const response = await transactionApi.getHistory({ limit: 10 });
       return response.data;
     },
-    enabled: isAuthenticated(),
+    enabled: isUserAuthenticated,
   });
 
   const createPayRequestMutation = useMutation({
@@ -98,7 +99,7 @@ export default function DashboardPage() {
     createPayRequestMutation.mutate();
   };
 
-  if (!isAuthenticated()) {
+  if (!isUserAuthenticated) {
     return null;
   }
 

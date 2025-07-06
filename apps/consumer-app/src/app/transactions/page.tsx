@@ -11,12 +11,13 @@ import { isAuthenticated, getCurrentUser } from "@/lib/auth";
 export default function TransactionsPage() {
   const router = useRouter();
   const currentUser = getCurrentUser();
+  const isUserAuthenticated = isAuthenticated();
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isUserAuthenticated) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router, isUserAuthenticated]);
 
   const { data: transactionsData, isLoading } = useQuery({
     queryKey: ["transactions", "all"],
@@ -24,10 +25,10 @@ export default function TransactionsPage() {
       const response = await transactionApi.getHistory({ limit: 100 });
       return response.data;
     },
-    enabled: isAuthenticated(),
+    enabled: isUserAuthenticated,
   });
 
-  if (!isAuthenticated()) {
+  if (!isUserAuthenticated) {
     return null;
   }
 

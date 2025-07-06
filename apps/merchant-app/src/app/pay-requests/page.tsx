@@ -19,12 +19,13 @@ import { CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default function PayRequestsPage() {
   const router = useRouter();
+  const isUserAuthenticated = isAuthenticated();
 
   useEffect(() => {
-    if (!isAuthenticated()) {
+    if (!isUserAuthenticated) {
       router.push("/login");
     }
-  }, [router]);
+  }, [router, isUserAuthenticated]);
 
   const { data: payRequestsData, isLoading } = useQuery({
     queryKey: ["payRequests", "sent"],
@@ -32,10 +33,10 @@ export default function PayRequestsPage() {
       const response = await payRequestApi.getSent();
       return response.data;
     },
-    enabled: isAuthenticated(),
+    enabled: isUserAuthenticated,
   });
 
-  if (!isAuthenticated()) {
+  if (!isUserAuthenticated) {
     return null;
   }
 
