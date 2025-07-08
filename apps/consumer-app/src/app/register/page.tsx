@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button, Input, Label, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@paynxt/ui";
 import { authApi, setToken } from "@/lib/api";
 import { setCurrentUser } from "@/lib/auth";
-import { registerSchema, UserType } from "@paynxt/types";
+import { registerSchema, UserType, RegisterResponse } from "@paynxt/types";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -32,7 +32,7 @@ export default function RegisterPage() {
         userType: UserType.CONSUMER,
       });
 
-      const response = await authApi.register(validatedData);
+      const response = await authApi.register(validatedData) as { success: boolean; data?: RegisterResponse; error?: string };
 
       if (response.success && response.data) {
         setToken(response.data.token);

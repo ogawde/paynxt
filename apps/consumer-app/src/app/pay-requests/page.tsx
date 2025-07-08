@@ -16,6 +16,7 @@ import {
 import { Navbar } from "@/components/navbar";
 import { payRequestApi } from "@/lib/api";
 import { isAuthenticated } from "@/lib/auth";
+import { PayRequestListResponse } from "@paynxt/types";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 
 export default function PayRequestsPage() {
@@ -31,11 +32,11 @@ export default function PayRequestsPage() {
     }
   }, [router, isUserAuthenticated]);
 
-  const { data: payRequestsData, isLoading } = useQuery({
+  const { data: payRequestsData, isLoading } = useQuery<PayRequestListResponse>({
     queryKey: ["payRequests", "received"],
-    queryFn: async () => {
+    queryFn: async (): Promise<PayRequestListResponse> => {
       const response = await payRequestApi.getReceived();
-      return response.data;
+      return response.data as PayRequestListResponse;
     },
     enabled: isUserAuthenticated,
   });

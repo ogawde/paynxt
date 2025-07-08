@@ -1,18 +1,6 @@
 import * as React from "react";
+import { Transaction, TransactionStatus } from "@paynxt/types";
 import { formatCurrency, formatDate } from "../lib/utils";
-
-interface Transaction {
-  id: string;
-  fromUserId: string;
-  toUserId: string;
-  amount: number;
-  status: "PENDING" | "COMPLETED" | "FAILED";
-  type: "TRANSFER" | "PAY_REQUEST";
-  createdAt: Date | string;
-  completedAt?: Date | string | null;
-  fromUser?: { email: string };
-  toUser?: { email: string };
-}
 
 export interface TransactionListProps {
   transactions: Transaction[];
@@ -20,7 +8,7 @@ export interface TransactionListProps {
   emptyMessage?: string;
 }
 
-const statusStyles = {
+const statusStyles: Record<TransactionStatus, string> = {
   PENDING: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
   COMPLETED: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
   FAILED: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200",

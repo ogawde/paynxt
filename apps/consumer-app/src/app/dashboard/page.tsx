@@ -20,6 +20,8 @@ import { Navbar } from "@/components/navbar";
 import { userApi, transactionApi } from "@/lib/api";
 import { isAuthenticated, getCurrentUser } from "@/lib/auth";
 import { Send } from "lucide-react";
+import { UserBalanceResponse, TransactionHistoryResponse } from "@paynxt/types";
+
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -38,20 +40,20 @@ export default function DashboardPage() {
     }
   }, [router, isUserAuthenticated]);
 
-  const { data: balanceData, isLoading: isLoadingBalance, refetch: refetchBalance } = useQuery({
+  const { data: balanceData, isLoading: isLoadingBalance, refetch: refetchBalance } = useQuery<UserBalanceResponse>({
     queryKey: ["balance"],
-    queryFn: async () => {
+    queryFn: async (): Promise<UserBalanceResponse> => {
       const response = await userApi.getBalance();
-      return response.data;
+      return response.data as UserBalanceResponse;
     },
     enabled: isUserAuthenticated,
   });
 
-  const { data: transactionsData, isLoading: isLoadingTransactions } = useQuery({
+  const { data: transactionsData, isLoading: isLoadingTransactions } = useQuery<TransactionHistoryResponse>({
     queryKey: ["transactions", "recent"],
-    queryFn: async () => {
+    queryFn: async (): Promise<TransactionHistoryResponse> => {
       const response = await transactionApi.getHistory({ limit: 10 });
-      return response.data;
+      return response.data as TransactionHistoryResponse;
     },
     enabled: isUserAuthenticated,
   });

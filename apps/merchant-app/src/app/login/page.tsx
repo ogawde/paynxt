@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button, Input, Label, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@paynxt/ui";
 import { authApi, setToken } from "@/lib/api";
 import { setCurrentUser } from "@/lib/auth";
-import { loginSchema } from "@paynxt/types";
+import { loginSchema, LoginResponse } from "@paynxt/types";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +21,7 @@ export default function LoginPage() {
 
     try {
       const validatedData = loginSchema.parse({ email: emailValue, password: passwordValue });
-      const response = await authApi.login(validatedData);
+      const response = await authApi.login(validatedData) as { success: boolean; data?: LoginResponse; error?: string };
 
       if (response.success && response.data) {
         setToken(response.data.token);

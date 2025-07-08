@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle, TransactionL
 import { Navbar } from "@/components/navbar";
 import { transactionApi } from "@/lib/api";
 import { isAuthenticated, getCurrentUser } from "@/lib/auth";
+import { TransactionHistoryResponse } from "@paynxt/types";
 
 export default function TransactionsPage() {
   const router = useRouter();
@@ -19,11 +20,11 @@ export default function TransactionsPage() {
     }
   }, [router, isUserAuthenticated]);
 
-  const { data: transactionsData, isLoading } = useQuery({
+  const { data: transactionsData, isLoading } = useQuery<TransactionHistoryResponse>({
     queryKey: ["transactions", "all"],
-    queryFn: async () => {
+    queryFn: async (): Promise<TransactionHistoryResponse> => {
       const response = await transactionApi.getHistory({ limit: 100 });
-      return response.data;
+      return response.data as TransactionHistoryResponse;
     },
     enabled: isUserAuthenticated,
   });
