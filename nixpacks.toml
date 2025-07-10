@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["nodejs-22_x", "corepack"]
+
+[phases.install]
+cmds = [
+  "corepack enable",
+  "corepack prepare pnpm@10.26.0 --activate",
+  "pnpm install"
+]
+
+[phases.build]
+cmds = ["pnpm build --filter=@paynxt/api"]
