@@ -1,12 +1,12 @@
-import { Router } from "express";
+import { Router, type IRouter } from "express";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { type SignOptions } from "jsonwebtoken";
 import { prisma, UserType } from "@paynxt/database";
 import { registerSchema, loginSchema } from "@paynxt/types";
 import { config } from "../config";
 import { AppError } from "../middleware/error-handler";
 
-const router = Router();
+const router: IRouter = Router();
 
 router.post("/register", async (req, res, next) => {
   try {
@@ -45,7 +45,7 @@ router.post("/register", async (req, res, next) => {
         userType: user.userType,
       },
       config.jwtSecret,
-      { expiresIn: config.jwtExpiresIn }
+      { expiresIn: config.jwtExpiresIn } as SignOptions
     );
 
     res.status(201).json({
@@ -89,7 +89,7 @@ router.post("/login", async (req, res, next) => {
         userType: user.userType,
       },
       config.jwtSecret,
-      { expiresIn: config.jwtExpiresIn }
+      { expiresIn: config.jwtExpiresIn } as SignOptions
     );
 
     res.json({

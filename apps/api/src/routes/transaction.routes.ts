@@ -1,10 +1,10 @@
-import { Router } from "express";
+import { Router, type IRouter } from "express";
 import { prisma, TransactionStatus, TransactionType } from "@paynxt/database";
 import { transferSchema } from "@paynxt/types";
 import { requireAuth } from "../middleware/auth";
 import { AppError } from "../middleware/error-handler";
 
-const router = Router();
+const router: IRouter = Router();
 
 router.use(requireAuth);
 
