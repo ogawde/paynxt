@@ -1,5 +1,4 @@
-
-export * from "./api.js";
-export * from "./models.js";
-export * from "./schemas.js";
+export * from "./api";
+export * from "./models";
+export * from "./schemas";
 
