@@ -38,8 +38,15 @@ export async function processTransaction(
           throw new Error("Recipient not found");
         }
 
-        const senderBalance = Number(senderResult[0].balance);
-        const recipientBalance = Number(recipientResult[0].balance);
+        const sender = senderResult[0];
+        const recipient = recipientResult[0];
+
+        if (!sender || !recipient) {
+          throw new Error("Sender or recipient not found");
+        }
+
+        const senderBalance = Number(sender.balance);
+        const recipientBalance = Number(recipient.balance);
 
         if (senderBalance < transaction.amount) {
         await tx.transaction.update({
