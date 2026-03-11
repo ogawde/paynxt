@@ -38,7 +38,11 @@ export default function PayRequestsPage() {
   });
 
   if (!isUserAuthenticated) {
-    return null;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-muted-foreground">Redirecting to login...</p>
+      </div>
+    );
   }
 
   const payRequests = payRequestsData?.payRequests || [];

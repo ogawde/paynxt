@@ -39,6 +39,7 @@ export function errorHandler(
     return;
   }
 
+  console.error(error);
   res.status(500).json({
     success: false,
     error: "Internal server error. Please try again later.",

@@ -65,7 +65,6 @@ export const authApi = {
 };
 
 export const userApi = {
-  getProfile: () => apiRequest("/api/user/profile"),
   getBalance: () => apiRequest("/api/user/balance"),
 };
 
