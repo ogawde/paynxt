@@ -1,0 +1,24 @@
+services:
+  paynxt-api:
+    container_name: paynxt-api
+    build:
+      context: .
+      dockerfile: apps/api/Dockerfile
+    env_file:
+      - apps/api/.env
+    environment:
+      PORT: "4000"
+    ports:
+      - "4000:4000"
+    restart: unless-stopped
+
+  paynxt-sweeper:
+    container_name: paynxt-sweeper
+    build:
+      context: .
+      dockerfile: apps/sweeper/Dockerfile
+    env_file:
+      - apps/sweeper/.env
+    depends_on:
+      - paynxt-api
+    restart: unless-stopped

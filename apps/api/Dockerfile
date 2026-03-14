@@ -16,5 +16,4 @@ RUN pnpm build --filter=@paynxt/api
 
 WORKDIR /app/apps/api
 
-# Use tsx to handle TypeScript workspace packages at runtime
 CMD ["npx", "tsx", "src/index.ts"]
