@@ -8,37 +8,6 @@ const router: IRouter = Router();
 
 router.use(requireAuth);
 
-router.get("/profile", async (req, res, next) => {
-  try {
-    if (!req.user) {
-      throw new AppError("Authentication required", 401);
-    }
-
-    const user = await prisma.user.findUnique({
-      where: { id: req.user.userId },
-      select: {
-        id: true,
-        email: true,
-        userType: true,
-        balance: true,
-        createdAt: true,
-        updatedAt: true,
-      },
-    });
-
-    if (!user) {
-      throw new AppError("User not found", 404);
-    }
-
-    res.json({
-      success: true,
-      data: { user },
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.get("/balance", async (req, res, next) => {
   try {
     if (!req.user) {

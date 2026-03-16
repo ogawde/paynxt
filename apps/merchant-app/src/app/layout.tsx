@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "PayNXT - Merchant",
   description: "Manage your merchant payments",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

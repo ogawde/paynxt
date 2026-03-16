@@ -39,17 +39,14 @@ export async function processTransaction(
         }
 
         const sender = senderResult[0];
-        const recipient = recipientResult[0];
-
-        if (!sender || !recipient) {
-          throw new Error("Sender or recipient not found");
+        if (!sender) {
+          throw new Error("Sender not found");
         }
 
         const senderBalance = Number(sender.balance);
-        const recipientBalance = Number(recipient.balance);
 
         if (senderBalance < transaction.amount) {
-        await tx.transaction.update({
+          await tx.transaction.update({
             where: { id: transactionId },
             data: {
               status: TransactionStatus.FAILED,

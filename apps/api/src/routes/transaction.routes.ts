@@ -119,43 +119,5 @@ router.get("/history", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    if (!req.user) {
-      throw new AppError("Authentication required", 401);
-    }
-
-    const transaction = await prisma.transaction.findUnique({
-      where: { id: req.params.id },
-      include: {
-        fromUser: {
-          select: { email: true, userType: true },
-        },
-        toUser: {
-          select: { email: true, userType: true },
-        },
-      },
-    });
-
-    if (!transaction) {
-      throw new AppError("Transaction not found", 404);
-    }
-
-    if (
-      transaction.fromUserId !== req.user.userId &&
-      transaction.toUserId !== req.user.userId
-    ) {
-      throw new AppError("Access denied", 403);
-    }
-
-    res.json({
-      success: true,
-      data: { transaction },
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
 export default router;
 

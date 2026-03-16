@@ -3,7 +3,6 @@ import {
   LoginInput,
   RegisterInput,
   TransferInput,
-  CreatePayRequestInput,
 } from "@paynxt/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -15,10 +14,6 @@ function getToken(): string | null {
 
 export function setToken(token: string): void {
   localStorage.setItem("token", token);
-}
-
-export function clearToken(): void {
-  localStorage.removeItem("token");
 }
 
 async function apiRequest<T>(
@@ -79,8 +74,6 @@ export const transactionApi = {
     const query = new URLSearchParams(params as Record<string, string>).toString();
     return apiRequest(`/api/transactions/history?${query}`);
   },
-
-  getById: (id: string) => apiRequest(`/api/transactions/${id}`),
 };
 
 export const payRequestApi = {

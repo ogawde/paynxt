@@ -17,10 +17,6 @@ export function setToken(token: string): void {
   localStorage.setItem("token", token);
 }
 
-export function clearToken(): void {
-  localStorage.removeItem("token");
-}
-
 async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {}
@@ -79,8 +75,6 @@ export const transactionApi = {
     const query = new URLSearchParams(params as Record<string, string>).toString();
     return apiRequest(`/api/transactions/history?${query}`);
   },
-
-  getById: (id: string) => apiRequest(`/api/transactions/${id}`),
 };
 
 export const payRequestApi = {

@@ -28,7 +28,7 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function shutdown(signal: string): Promise<void> {
+async function shutdown(): Promise<void> {
   isShuttingDown = true;
 
   await sleep(2000);
@@ -37,8 +37,8 @@ async function shutdown(signal: string): Promise<void> {
   process.exit(0);
 }
 
-process.on("SIGINT", () => shutdown("SIGINT"));
-process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => void shutdown());
+process.on("SIGTERM", () => void shutdown());
 
 runSweeperLoop().catch(async () => {
   await prisma.$disconnect();

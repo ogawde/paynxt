@@ -49,7 +49,7 @@ export default function PayRequestsPage() {
       queryClient.invalidateQueries({ queryKey: ["payRequests"] });
       queryClient.invalidateQueries({ queryKey: ["balance"] });
       queryClient.invalidateQueries({ queryKey: ["transactions"] });
-      
+
       setTimeout(() => setActionSuccess(""), 3000);
     },
     onError: (error: Error) => {
@@ -64,7 +64,7 @@ export default function PayRequestsPage() {
       setActionSuccess("Pay request rejected.");
       setActionError("");
       queryClient.invalidateQueries({ queryKey: ["payRequests"] });
-      
+
       setTimeout(() => setActionSuccess(""), 3000);
     },
     onError: (error: Error) => {
